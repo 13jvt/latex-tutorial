@@ -9,13 +9,25 @@
 \setbeamertemplate{enumerate items}[default]
 \setbeamertemplate{bibliography item}[text]
 
-% verbatim settings
-\DefineVerbatimEnvironment{myverbatim}{Verbatim}{fontsize=\small}
+\usepackage{ragged2e}
 
-\usepackage{etoolbox}
-\makeatletter
-\preto{\@verbatim}{\topsep=0pt \partopsep=0pt }
-\makeatother
+% listings settings
+\lstset{
+  basicstyle=\small,
+  commentstyle=\color{gray},
+  keywordstyle=,
+  breaklines=true,
+  tabsize=2,
+  frame=leftline
+}
+
+% hyperref settings
+\hypersetup{
+  colorlinks=true,
+  linkcolor=,
+  filecolor=,
+  urlcolor=blue
+}
 
 % title content
 \title{A \LaTeX~Tutorial}
@@ -30,355 +42,455 @@
 
 \section{Introduction}
 
-% \begin{frame}[fragile]{}
-%   \begin{myverbatim}
+\begin{frame}{Goals of this presentation}
 
-%   \end{myverbatim}
-% \end{frame}
+\vspace{1.5em}
+
+\begin{itemize}
+  \item \textbf{Not} comprehensive
+  \item Starting reference to show that \LaTeX~isn't \textit{that} scary
+  \item Provide some tips \& tricks
+  \item Tons of useful \LaTeX~tutorials by \href{https://www.overleaf.com/learn}{Overleaf}
+\end{itemize}
+
+\vspace{2em}
+
+\begin{center}
+  \fbox{\includegraphics[width=0.8\textwidth]{figures/cool.pdf}}
+\end{center}
+
+\end{frame}
 
 \begin{frame}{What is \LaTeX?}
+
+\begin{itemize}
+  \item From \href{https://www.britannica.com/technology/TeX}{Encycolpedia Britannica}:
+  \begin{justify}
+    ``TeX, a page-description computer programming language developed during 1977--86 by Donald Knuth, a Stanford University professor, to improve the quality of mathematical notation in his books. Text formatting systems [\ldots] embed plain text formatting commands in a document, which are then interpreted by the language processor to produce a formatted document for display or printing.''
+  \end{justify}
+  \item\LaTeX is the corresponding software package
+  \item TeX consists of the greek letters $\tau$, $\epsilon$, $\chi$, and is pronounced ``lay-tech''
+\end{itemize}
 
 \end{frame}
 
 \section{Documents}
 
 \begin{frame}[fragile]{A \LaTeX~document}
-  \begin{myverbatim}
-    \documentclass[12pt]{article}
 
-    % remaining preamble goes here
+\begin{lstlisting}[language=TeX]
+\documentclass[12pt]{article}
 
-    \begin{document}
-    
-    % content goes here
+% remaining preamble goes here
 
-    \end{document}
-  \end{myverbatim}
+\begin{document}
+
+% content goes here
+
+\end{document}
+\end{lstlisting}
+
 \end{frame}
 
 \begin{frame}[fragile]{Creating a title}
-  \begin{myverbatim}
-    \documentclass[12pt]{article}
 
-    \title{Automatic Material Classification}
-    \author{Unal Artan \thanks{Thank you to Natalie \& Johann}}
-    \date{August 24, 2021}
+\begin{lstlisting}[language=TeX]
+\documentclass[12pt]{article}
 
-    \begin{document}
+\title{Automatic Material Classification}
+\author{Unal Artan \thanks{Thank you to Natalie \& Johann}}
+\date{August 24, 2021}
 
-    \maketitle
-    ...
-  \end{myverbatim}
+\begin{document}
+
+\maketitle
+...
+\end{lstlisting}
+
 \end{frame}
 
+% include resulting pdf page
 {
   \setbeamercolor{background canvas}{bg=}
   \includepdf[fitpaper]{figures/title.pdf}
 }
 
 \begin{frame}[fragile]{Common commands}
-  \begin{center}
-    \begin{tabular}{ l | l }
-      comments              & \verb_% ..._                              \\
-      \textbf{bold}         & \verb_\textbf{...}_                       \\
-      \textit{italic}       & \verb_\textit{...}_ or \verb_\emph{...}_  \\
-      \underline{underline} & \verb_\underline{...}_                    \\
-      inline equations      & \verb_$...$_                              \\
-      block equations       & \verb_$$...$$_ or \verb_\[...\]_          \\
-      \ldots and many more! & \verb_\ldots_                             \\
-    \end{tabular}
-  \end{center}
+
+\begin{center}
+  \begin{tabular}{ l | l }
+    comments              & \verb_% ..._                              \\
+    \textbf{bold}         & \verb_\textbf{...}_                       \\
+    \textit{italic}       & \verb_\textit{...}_ or \verb_\emph{...}_  \\
+    \underline{underline} & \verb_\underline{...}_                    \\
+    inline equations      & \verb_$...$_                              \\
+    block equations       & \verb_$$...$$_ or \verb_\[...\]_          \\
+    \ldots and many more! & \verb_\ldots_                             \\
+  \end{tabular}
+\end{center}
+
+\vspace{1em}
+
+\begin{center}
+  \verb_\include{...}_ is used to insert \LaTeX code from another file in-place
+\end{center}
+
 \end{frame}
 
 \begin{frame}[fragile]{Layout commands/info}
-  \begin{center}
-    \begin{tabular}{ l | l }
-      Command             & Description        \\
-      \hline
-      \verb_\vspace{...}_ & vertical spacing   \\
-      \verb_\hspace{...}_ & horizontal spacing \\
-    \end{tabular}
-  \end{center}
 
-  \begin{center}
-    \begin{tabular}{ l | l }
-      Dimension & Description \\
-      \hline
-      \verb_pt_ & point, smallest unit of measure \\
-      \verb_in_ & inch (72.27 \verb_pt_) \\
-      \verb_cm_ & centimeter \\
-      \verb_mm_ & millimeter \\
-      \verb_em_ & relative to current point size (e.g., for 11\verb_pt_ font, 1\verb_em_ = 11\verb_pt_) \\
-      \verb_en_ & half the width of \verb_em_
-    \end{tabular}
-  \end{center}
+\begin{center}
+  \begin{tabular}{ l l }
+    \hline
+    \textbf{Command} & \textbf{Description} \\
+    \hline
+    \verb_\vspace{...}_ & add vertical space \\
+    \verb_\hspace{...}_ & add horizontal space \\
+    \hline
+    \textbf{Dimension} & \textbf{Description} \\
+    \hline
+    \verb_pt_ & point, smallest unit of measure \\
+    \verb_in_ & inch (72.27 \verb_pt_) \\
+    \verb_cm_ & centimeter \\
+    \verb_mm_ & millimeter \\
+    \verb_em_ & relative to current point size (e.g., for 11\verb_pt_ font, 1\verb_em_ = 11\verb_pt_) \\
+    \verb_en_ & half the width of \verb_em_ \\
+  \end{tabular}
+\end{center}
+
 \end{frame}
 
 \begin{frame}{Typesetting notes}
-  \begin{itemize}
-    \item Extra spaces between words are ignored
-    \item An empty line starts a new \textbf{paragraph}
-    \item Two backslashes (\textbackslash\textbackslash) \textbf{forces} a line break, but does not start a new paragraph (i.e., no indent)
-    \item Periods are treated as the \textbf{end of a sentence}, unless followed by a comma or backslash (e.g., i.e.\textbackslash)
-    \item Tilde (\textasciitilde) inserts \textbf{non-breaking whitespace}
-    \item \textbf{Opening quotes} are denoted by 1--2 grave accents (` or ``)
-    \item \textbf{Closing quotes} are denoted by 1--2 apostrophes (' or '')
-  \end{itemize}
+
+\begin{itemize}
+  \item Extra spaces between words are ignored
+  \item An empty line starts a new \textbf{paragraph}
+  \item Two backslashes (\textbackslash\textbackslash) \textbf{forces} a line break, but does not start a new paragraph (i.e., no indent)
+  \item Periods are treated as the \textbf{end of a sentence}, unless followed by a comma or backslash (e.g., i.e.\textbackslash)
+  \item Tilde (\textasciitilde) inserts \textbf{non-breaking whitespace}
+  \item \textbf{Opening quotes} are denoted by 1--2 grave accents (` or ``)
+  \item \textbf{Closing quotes} are denoted by 1--2 apostrophes (' or '')
+\end{itemize}
+
 \end{frame}
 
 \section{Lists}
 
 \begin{frame}[fragile]{Lists I: Itemize}
-  \begin{columns}
-    \column{0.5\textwidth}
-    \begin{myverbatim}
-      \begin{itemize}
-        \item Lima
-        \item[-] Navy
-        \item Kidney
-        \begin{itemize}
-          \item[yes] Bean
-          \item[no] Stone
-        \end{itemize}
-      \end{itemize}
-    \end{myverbatim}
 
-    \column{0.5\textwidth}
-    \begin{itemize}
-      \item Lima
-      \item[-] Navy
-      \item Kidney
-      \begin{itemize}
-        \item[yes] Bean
-        \item[no] Stone
-      \end{itemize}
-    \end{itemize}
+\begin{columns}
+\column{0.5\textwidth}
+\begin{lstlisting}[language=TeX]
+\begin{itemize}
+  \item Lima
+  \item[-] Navy
+  \item Kidney
+  \begin{itemize}
+    \item[yes] Bean
+    \item[no] Stone
+  \end{itemize}
+\end{itemize}
+\end{lstlisting}
 
-  \end{columns}
+\column{0.5\textwidth}
+\begin{itemize}
+  \item Lima
+  \item[-] Navy
+  \item Kidney
+  \begin{itemize}
+    \item[yes] Bean
+    \item[no] Stone
+  \end{itemize}
+\end{itemize}
+
+\end{columns}
+  
 \end{frame}
 
 \begin{frame}[fragile]{Lists II: Enumerate}
-  \begin{columns}
-    \column{0.5\textwidth}
-    \begin{myverbatim}
-      \begin{enumerate}
-        \item One
-        \item Two
-        \item Three
-        \begin{enumerate}
-          \item Three Eh
-          \item Three Bee
-        \end{enumerate}
-      \end{enumerate}
-    \end{myverbatim}
-    
-    \column{0.5\textwidth}
-    % use alphabet for enumii (must come after `\begin{document}')
-    \renewcommand{\theenumii}{\alph{enumii}}
-    \begin{enumerate}
-      \item One
-      \item Two
-      \item Three
-      \begin{enumerate}
-        \item Three Eh
-        \item Three Bee
-      \end{enumerate}
-    \end{enumerate}
 
-  \end{columns}
+\begin{columns}
+\column{0.5\textwidth}
+\begin{lstlisting}[language=TeX]
+\begin{enumerate}
+  \item One
+  \item Two
+  \item Three
+  \begin{enumerate}
+    \item Three Eh
+    \item Three Bee
+  \end{enumerate}
+\end{enumerate}
+\end{lstlisting}
+
+\column{0.5\textwidth}
+% use alphabet for enumii (must come after `\begin{document}')
+\renewcommand{\theenumii}{\alph{enumii}}
+\begin{enumerate}
+  \item One
+  \item Two
+  \item Three
+  \begin{enumerate}
+    \item Three Eh
+    \item Three Bee
+  \end{enumerate}
+\end{enumerate}
+
+\end{columns}
+
 \end{frame}
 
 \section{Tables}
 
-\begin{frame}[fragile]{Tabular}
-  \begin{columns}
-    \column{0.7\textwidth}
-    \begin{myverbatim}
-      \begin{tabular}{ | r | c c | }
-        \hline
-             & col1 & col2 \\ 
-        \hline
-        row1 & r1c1 &      \\
-        row2 &      & r2c2 \\
-        \hline
-      \end{tabular}
-    \end{myverbatim}
+\begin{frame}[fragile]{Tables}
 
-    \column{0.3\textwidth}
-    \begin{tabular}{ | r | c c | }
-      \hline
-           & col1 & col2 \\ 
-      \hline
-      row1 & r1c1 &      \\
-      row2 &      & r2c2 \\
-      \hline
-    \end{tabular}
-  \end{columns}
+\begin{columns}
+\column{0.6\textwidth}
+\begin{lstlisting}[language=TeX]
+\begin{tabular}{ | r | c c | }
+  \hline
+       & col1 & col2 \\ 
+  \hline
+  row1 & r1c1 &      \\
+  row2 &      & r2c2 \\
+  \hline
+\end{tabular}
+\end{lstlisting}
+
+\column{0.4\textwidth}
+\begin{tabular}{ | r | c c | }
+  \hline
+        & col1 & col2 \\ 
+  \hline
+  row1 & r1c1 &      \\
+  row2 &      & r2c2 \\
+  \hline
+\end{tabular}
+\end{columns}
+
 \end{frame}
 
 \section{Math}
 
-\begin{frame}[fragile]{Common Math Syntax}
-  \begin{center}
-    \begin{tabular}{ l l l l }
-      \hline Description   & Code                       & Output                \\
-      \hline subscript     & \verb-x_y-                 & $x_y$                 \\
-      \hline superscript   & \verb-x^y-                 & $x^y$                 \\
-      \hline grouping      & \verb-x^{y+z}-             & $x^{y+z}$             \\
-      \hline fraction      & \verb-\frac{x}{y}-         & $\frac{x}{y}$         \\
-      \hline square root   & \verb-\sqrt{x+y}-          & $\sqrt{x+y}$          \\
-      \hline greek letters & \verb-\alpha \beta \gamma- & $\alpha~\beta~\gamma$ \\
-      \hline spacing       & \verb-\; \: \,-            & contextual            \\
-    \end{tabular}
-  \end{center}
+\begin{frame}[fragile]{Common math syntax}
+
+\begin{center}
+  \begin{tabular}{ l l l l }
+    \hline Description   & Code                       & Output                \\
+    \hline subscript     & \verb-x_y-                 & $x_y$                 \\
+    \hline superscript   & \verb-x^y-                 & $x^y$                 \\
+    \hline grouping      & \verb-x^{y+z}-             & $x^{y+z}$             \\
+    \hline fraction      & \verb-\frac{x}{y}-         & $\frac{x}{y}$         \\
+    \hline square root   & \verb-\sqrt{x+y}-          & $\sqrt{x+y}$          \\
+    \hline greek letters & \verb-\alpha \beta \gamma- & $\alpha~\beta~\gamma$ \\
+    \hline spacing       & \verb-\; \: \, \!-         & contextual            \\
+  \end{tabular}
+\end{center}
+
 \end{frame}
 
-\begin{frame}[fragile,allowframebreaks]{Equation Environments}
-  \begin{myverbatim}
-    \begin{equation}
-      \beta(s) = \int^\infty_{-\infty} CWT(s, \tau) \; d\tau
-      \label{eq:CWTint}
-    \end{equation}
-  \end{myverbatim}
+\begin{frame}[fragile]{Equations}
 
-  \vspace{1em}
-  
-  \begin{equation}
-    \beta(s) = \int^\infty_{-\infty} CWT(s, \tau) \; d\tau
-    \label{eq:CWTint}
-  \end{equation}
+\begin{lstlisting}[language=TeX]
+\begin{equation}
+  \beta(s) = \int^\infty_{-\infty} CWT(s, \tau) \; d\tau
+  \label{eq:CWTint}
+\end{equation}
+\end{lstlisting}
 
-  \framebreak
+\vspace{1em}
 
-  \begin{myverbatim}
-    \begin{equation}
-      \begin{split}
-        a_{1, X} = & a_{1,x} \cos{\alpha} \\
-                   & - a_{1,z} \sin{\alpha}
-      \end{split}
-    \end{equation}
-  \end{myverbatim}
+\begin{equation}
+  \beta(s) = \int^\infty_{-\infty} CWT(s, \tau) \; d\tau
+  \label{eq:CWTint}
+\end{equation}
 
-  \vspace{1em}
+\end{frame}
 
-  \begin{equation}
-    \begin{split}
-      a_{1, X} = & a_{1,x} \cos{\alpha} \\
-                 & - a_{1,z} \sin{\alpha}
-    \end{split}
-  \end{equation}
+\begin{frame}[fragile]{Multiline equations}
+
+\begin{lstlisting}[language=TeX]
+\begin{equation}
+  \begin{split}
+    a_{1, X} = & a_{1,x} \cos{\alpha} \\
+                & - a_{1,z} \sin{\alpha}
+  \end{split}
+\end{equation}
+\end{lstlisting}
+
+\vspace{0em}
+
+\begin{equation}
+  \begin{split}
+    a_{1, X} = & a_{1,x} \cos{\alpha} \\
+                & - a_{1,z} \sin{\alpha}
+  \end{split}
+\end{equation}
 
 \end{frame}
 
 \section{Figures}
 
-\begin{frame}[fragile,allowframebreaks]{Figures}
-    \begin{myverbatim}
-      \begin{figure}
-        \includegraphics[height=0.65\textheight]{%
-          figures/loader_diagram.png%
-        }
-        \caption{The Kubota R520s robotic 1-tonne-capacity wheel
-        loader that was used for field experiments.}
-        \label{fig:loader}
-      \end{figure}
-    \end{myverbatim}
+\begin{frame}[fragile,allowframebreaks]{Creating a figure}
 
-    \framebreak
+\begin{lstlisting}[language=TeX]
+\begin{figure}[t]
+  \centering
+  \includegraphics[height=0.65\textheight]{figures/loader_diagram.png}
+  \caption{The Kubota R520s robotic 1-tonne-capacity wheel loader that was used for field experiments.}
+  \label{fig:loader}
+\end{figure}
+\end{lstlisting}
 
-    \begin{figure}
-      \includegraphics[height=0.65\textheight]{%
-        figures/loader_diagram.png%
-      }
-      \caption{The Kubota R520s robotic 1-tonne-capacity wheel
-      loader that was used for field experiments.}
-      \label{fig:loader}
-    \end{figure}
+\framebreak
+
+\begin{figure}[t]
+  \centering
+  \includegraphics[height=0.65\textheight]{figures/loader_diagram.png}
+  \caption{The Kubota R520s robotic 1-tonne-capacity wheel loader that was used for field experiments.}
+  \label{fig:loader}
+\end{figure}
+
 \end{frame}    
 
 \section{References}
 
 \begin{frame}[fragile]{Label references}
-  \begin{myverbatim}
-    ``\ldots the Kubota Loader in Figure~\ref{fig:loader}''
-  \end{myverbatim}
 
-  \begin{center}
-    ``\ldots the Kubota Loader in Figure~\ref{fig:loader}''
-  \end{center}
+\begin{lstlisting}[language=TeX]
+``\ldots the Kubota Loader in Figure~\ref{fig:loader}''
+\end{lstlisting}
 
-  \vspace{2em}
+``\ldots the Kubota Loader in Figure~\ref{fig:loader}''
 
-  \begin{myverbatim}
-    ``see Equation~\ref{eq:CWTint}''
-  \end{myverbatim}
+\vspace{2em}
 
-  \begin{center}
-    ``see Equation~\ref{eq:CWTint}''
-  \end{center}
-\end{frame}
+\begin{lstlisting}[language=TeX]
+``see Equation~\ref{eq:CWTint}''
+\end{lstlisting}
 
-\begin{frame}[fragile]{BibTeX}
-  Markup language for defining bibliography entries
+``see Equation~\ref{eq:CWTint}''
 
-  \vspace{1em}
-  {
-    \tiny
-    \lstinputlisting[
-      breaklines=true,
-      postbreak=\mbox{\textcolor{red}{$\hookrightarrow$}\space}
-    ]{references.bib}
-  }
-  \vspace{1em}
-
-  \begin{myverbatim}
-    ``\ldots due to breakthrough research \cite{artan2021}''
-  \end{myverbatim}
-
-  \begin{center}
-    ``\ldots due to breakthrough research \cite{artan2021}''
-  \end{center}
 \end{frame}
 
 \begin{frame}[fragile]{Bibliography references}
 
-  % references (build: xelatex, bibtex, xelatex)
+BibTeX entry (.bib files):
 
-  \begin{myverbatim}
-    \bibliographystyle{ieeetr}
-    \bibliography{references.bib}
-  \end{myverbatim}
+\lstinputlisting[basicstyle=\tiny]{references.bib}
 
-  \vspace{1em}
+\begin{lstlisting}[language=TeX]
+``\ldots due to breakthrough research \cite{artan2021}''
+\end{lstlisting}
 
-  \bibliographystyle{ieeetr}
-  \bibliography{references.bib}
+\vspace{0.5em}
+
+``\ldots due to breakthrough research \cite{artan2021}''
+
+\end{frame}
+
+\begin{frame}[fragile]{Inserting a bibliography}
+
+% references (build: xelatex, bibtex, xelatex)
+
+Often requires you to precompile your document, run bibtex, then compile it again with resolved references \ldots
+
+\vspace{0.5em}
+
+\begin{lstlisting}[language=TeX]
+\bibliographystyle{ieeetr}
+\bibliography{references.bib}
+\end{lstlisting}
+
+\vspace{1em}
+
+\bibliographystyle{ieeetr}
+\bibliography{references.bib}
+
 \end{frame}
 
 \begin{frame}[fragile]{Hyperlinks}
 
-  \begin{verbatim}
-    temp
-  \end{verbatim}
+\begin{lstlisting}[language=TeX]
+\href{https://ieeexplore.ieee.org/document/9517696}{Paper}
+\end{lstlisting}
+
+\href{https://ieeexplore.ieee.org/document/9517696}{Paper}
+
+\vspace{1.5em}
+
+\begin{lstlisting}[language=TeX]
+\hypertarget{link:resolved}{This part}
+\hyperlink{link:resolved}{That part}
+\end{lstlisting}
+
+\hypertarget{link:resolved}{This part}
+
+\hyperlink{link:resolved}{That part}
 
 \end{frame}
 
 \section{Commands}
 
-\begin{frame}[fragile]{Commands}
+\begin{frame}[fragile]{Custom commands}
 
-  \begin{verbatim}
-    \renewcommand{cmd}[args][default]{def}
-  \end{verbatim}
+\begin{lstlisting}[language=TeX]
+\newcommand{cmd}[args][default]{def}
+\end{lstlisting}
+
+\begin{tabular}{ l | l }
+  \verb_cmd_ & name of the command \\
+  \verb_args_ & number of parameters \\
+  \verb_default_ & default value for optional first parameter \verb_#1_ \\
+  \verb_def_ & command body \\
+\end{tabular}
+
+\vspace{1.5em}
+
+\begin{lstlisting}[language=TeX]
+\newcommand{\proot}[2][]{{^{#1}}\!\!\!\sqrt{#2}}
+\[ \proot[3]{x + y} + \proot{x} \]
+\end{lstlisting}
+
+\newcommand{\proot}[2][]{{^{#1}}\!\!\!\sqrt{#2}}
+\[ \proot[3]{x + y} + \proot{x} \]
 
 \end{frame}
 
-\begin{frame}[fragile]{Environments}
+\begin{frame}[fragile,allowframebreaks]{Custom environments}
 
-  \begin{verbatim}
-    \renewenvironment{nam}[args][default]{begdef}{enddef}
-  \end{verbatim}
-  
+\begin{lstlisting}[language=TeX]
+\newenvironment{name}[args][default]{begdef}{enddef}
+\end{lstlisting}
+
+\begin{tabular}{ l | l }
+  \verb_name_ & name of the environment \\
+  \verb_args_ & number of parameters \\
+  \verb_default_ & default value for optional first parameter \verb_#1_ \\
+  \verb_begdef_ & \verb_\begin_ command body \\
+  \verb_enddef_ & \verb_\end_ command body \\
+\end{tabular}
+
+\framebreak
+
+\begin{lstlisting}[language=TeX]
+\newenvironment{LARGEcenter}
+  {\begin{center}\LARGE}
+  {\end{center}}
+
+\begin{tinycenter}
+  Thank you for your time!
+\end{tinycenter}
+\end{lstlisting}
+
+\newenvironment{LARGEcenter}
+  {\begin{center}\LARGE}
+  {\end{center}}
+
+\begin{LARGEcenter}
+  Any questions?
+\end{LARGEcenter}
+
 \end{frame}
 
 \end{document}
