@@ -1,0 +1,379 @@
+\documentclass[blue]{qslides}
+
+% include additional packages
+\usepackage{pdfpages}
+\usepackage{listings}
+
+% beamer template settings
+\setbeamertemplate{caption}[numbered]
+\setbeamertemplate{enumerate items}[default]
+\setbeamertemplate{bibliography item}[text]
+
+% verbatim settings
+\DefineVerbatimEnvironment{myverbatim}{Verbatim}{fontsize=\small}
+
+\usepackage{etoolbox}
+\makeatletter
+\preto{\@verbatim}{\topsep=0pt \partopsep=0pt }
+\makeatother
+
+% title content
+\title{A \LaTeX~Tutorial}
+\author[\insertframenumber~of~\inserttotalframenumber]{Johann von Tiesenhausen}
+\institute{Ingenuity Labs Research Institute \\ Queen's University, Kingston, Canada}
+\date{\today}
+\logo{\includegraphics[width=0.5in]{figures/ingenuitylabs_logo.pdf}}
+
+\begin{document}
+
+\frame{\titlepage}
+
+\section{Introduction}
+
+% \begin{frame}[fragile]{}
+%   \begin{myverbatim}
+
+%   \end{myverbatim}
+% \end{frame}
+
+\begin{frame}{What is \LaTeX?}
+
+\end{frame}
+
+\section{Documents}
+
+\begin{frame}[fragile]{A \LaTeX~document}
+  \begin{myverbatim}
+    \documentclass[12pt]{article}
+
+    % remaining preamble goes here
+
+    \begin{document}
+    
+    % content goes here
+
+    \end{document}
+  \end{myverbatim}
+\end{frame}
+
+\begin{frame}[fragile]{Creating a title}
+  \begin{myverbatim}
+    \documentclass[12pt]{article}
+
+    \title{Automatic Material Classification}
+    \author{Unal Artan \thanks{Thank you to Natalie \& Johann}}
+    \date{August 24, 2021}
+
+    \begin{document}
+
+    \maketitle
+    ...
+  \end{myverbatim}
+\end{frame}
+
+{
+  \setbeamercolor{background canvas}{bg=}
+  \includepdf[fitpaper]{figures/title.pdf}
+}
+
+\begin{frame}[fragile]{Common commands}
+  \begin{center}
+    \begin{tabular}{ l | l }
+      comments              & \verb_% ..._                              \\
+      \textbf{bold}         & \verb_\textbf{...}_                       \\
+      \textit{italic}       & \verb_\textit{...}_ or \verb_\emph{...}_  \\
+      \underline{underline} & \verb_\underline{...}_                    \\
+      inline equations      & \verb_$...$_                              \\
+      block equations       & \verb_$$...$$_ or \verb_\[...\]_          \\
+      \ldots and many more! & \verb_\ldots_                             \\
+    \end{tabular}
+  \end{center}
+\end{frame}
+
+\begin{frame}[fragile]{Layout commands/info}
+  \begin{center}
+    \begin{tabular}{ l | l }
+      Command             & Description        \\
+      \hline
+      \verb_\vspace{...}_ & vertical spacing   \\
+      \verb_\hspace{...}_ & horizontal spacing \\
+    \end{tabular}
+  \end{center}
+
+  \begin{center}
+    \begin{tabular}{ l | l }
+      Dimension & Description \\
+      \hline
+      \verb_pt_ & point, smallest unit of measure \\
+      \verb_in_ & inch (72.27 \verb_pt_) \\
+      \verb_cm_ & centimeter \\
+      \verb_mm_ & millimeter \\
+      \verb_em_ & relative to current point size (e.g., for 11\verb_pt_ font, 1\verb_em_ = 11\verb_pt_) \\
+      \verb_en_ & half the width of \verb_em_
+    \end{tabular}
+  \end{center}
+\end{frame}
+
+\begin{frame}{Typesetting notes}
+  \begin{itemize}
+    \item Extra spaces between words are ignored
+    \item An empty line starts a new \textbf{paragraph}
+    \item Two backslashes (\textbackslash\textbackslash) \textbf{forces} a line break, but does not start a new paragraph (i.e., no indent)
+    \item Periods are treated as the \textbf{end of a sentence}, unless followed by a comma or backslash (e.g., i.e.\textbackslash)
+    \item Tilde (\textasciitilde) inserts \textbf{non-breaking whitespace}
+    \item \textbf{Opening quotes} are denoted by 1--2 grave accents (` or ``)
+    \item \textbf{Closing quotes} are denoted by 1--2 apostrophes (' or '')
+  \end{itemize}
+\end{frame}
+
+\section{Lists}
+
+\begin{frame}[fragile]{Lists I: Itemize}
+  \begin{columns}
+    \column{0.5\textwidth}
+    \begin{myverbatim}
+      \begin{itemize}
+        \item Lima
+        \item[-] Navy
+        \item Kidney
+        \begin{itemize}
+          \item[yes] Bean
+          \item[no] Stone
+        \end{itemize}
+      \end{itemize}
+    \end{myverbatim}
+
+    \column{0.5\textwidth}
+    \begin{itemize}
+      \item Lima
+      \item[-] Navy
+      \item Kidney
+      \begin{itemize}
+        \item[yes] Bean
+        \item[no] Stone
+      \end{itemize}
+    \end{itemize}
+
+  \end{columns}
+\end{frame}
+
+\begin{frame}[fragile]{Lists II: Enumerate}
+  \begin{columns}
+    \column{0.5\textwidth}
+    \begin{myverbatim}
+      \begin{enumerate}
+        \item One
+        \item Two
+        \item Three
+        \begin{enumerate}
+          \item Three Eh
+          \item Three Bee
+        \end{enumerate}
+      \end{enumerate}
+    \end{myverbatim}
+    
+    \column{0.5\textwidth}
+    % use alphabet for enumii (must come after `\begin{document}')
+    \renewcommand{\theenumii}{\alph{enumii}}
+    \begin{enumerate}
+      \item One
+      \item Two
+      \item Three
+      \begin{enumerate}
+        \item Three Eh
+        \item Three Bee
+      \end{enumerate}
+    \end{enumerate}
+
+  \end{columns}
+\end{frame}
+
+\section{Tables}
+
+\begin{frame}[fragile]{Tabular}
+  \begin{columns}
+    \column{0.7\textwidth}
+    \begin{myverbatim}
+      \begin{tabular}{ | r | c c | }
+        \hline
+             & col1 & col2 \\ 
+        \hline
+        row1 & r1c1 &      \\
+        row2 &      & r2c2 \\
+        \hline
+      \end{tabular}
+    \end{myverbatim}
+
+    \column{0.3\textwidth}
+    \begin{tabular}{ | r | c c | }
+      \hline
+           & col1 & col2 \\ 
+      \hline
+      row1 & r1c1 &      \\
+      row2 &      & r2c2 \\
+      \hline
+    \end{tabular}
+  \end{columns}
+\end{frame}
+
+\section{Math}
+
+\begin{frame}[fragile]{Common Math Syntax}
+  \begin{center}
+    \begin{tabular}{ l l l l }
+      \hline Description   & Code                       & Output                \\
+      \hline subscript     & \verb-x_y-                 & $x_y$                 \\
+      \hline superscript   & \verb-x^y-                 & $x^y$                 \\
+      \hline grouping      & \verb-x^{y+z}-             & $x^{y+z}$             \\
+      \hline fraction      & \verb-\frac{x}{y}-         & $\frac{x}{y}$         \\
+      \hline square root   & \verb-\sqrt{x+y}-          & $\sqrt{x+y}$          \\
+      \hline greek letters & \verb-\alpha \beta \gamma- & $\alpha~\beta~\gamma$ \\
+      \hline spacing       & \verb-\; \: \,-            & contextual            \\
+    \end{tabular}
+  \end{center}
+\end{frame}
+
+\begin{frame}[fragile,allowframebreaks]{Equation Environments}
+  \begin{myverbatim}
+    \begin{equation}
+      \beta(s) = \int^\infty_{-\infty} CWT(s, \tau) \; d\tau
+      \label{eq:CWTint}
+    \end{equation}
+  \end{myverbatim}
+
+  \vspace{1em}
+  
+  \begin{equation}
+    \beta(s) = \int^\infty_{-\infty} CWT(s, \tau) \; d\tau
+    \label{eq:CWTint}
+  \end{equation}
+
+  \framebreak
+
+  \begin{myverbatim}
+    \begin{equation}
+      \begin{split}
+        a_{1, X} = & a_{1,x} \cos{\alpha} \\
+                   & - a_{1,z} \sin{\alpha}
+      \end{split}
+    \end{equation}
+  \end{myverbatim}
+
+  \vspace{1em}
+
+  \begin{equation}
+    \begin{split}
+      a_{1, X} = & a_{1,x} \cos{\alpha} \\
+                 & - a_{1,z} \sin{\alpha}
+    \end{split}
+  \end{equation}
+
+\end{frame}
+
+\section{Figures}
+
+\begin{frame}[fragile,allowframebreaks]{Figures}
+    \begin{myverbatim}
+      \begin{figure}
+        \includegraphics[height=0.65\textheight]{%
+          figures/loader_diagram.png%
+        }
+        \caption{The Kubota R520s robotic 1-tonne-capacity wheel
+        loader that was used for field experiments.}
+        \label{fig:loader}
+      \end{figure}
+    \end{myverbatim}
+
+    \framebreak
+
+    \begin{figure}
+      \includegraphics[height=0.65\textheight]{%
+        figures/loader_diagram.png%
+      }
+      \caption{The Kubota R520s robotic 1-tonne-capacity wheel
+      loader that was used for field experiments.}
+      \label{fig:loader}
+    \end{figure}
+\end{frame}    
+
+\begin{frame}[fragile]{References}
+    \begin{myverbatim}
+      ``\ldots the Kubota Loader in Figure~\ref{fig:loader}''
+    \end{myverbatim}
+
+    \begin{center}
+      ``\ldots the Kubota Loader in Figure~\ref{fig:loader}''
+    \end{center}
+
+    \vspace{2em}
+
+    \begin{myverbatim}
+      ``see Equation~\ref{eq:CWTint}''
+    \end{myverbatim}
+
+    \begin{center}
+      ``see Equation~\ref{eq:CWTint}''
+    \end{center}
+\end{frame}
+
+\section{Bibliography}
+
+\begin{frame}[fragile]{BibTeX}
+  Markup language for defining bibliography entries
+
+  \vspace{1em}
+
+  {
+    \tiny
+    \lstinputlisting[
+      breaklines=true,
+      postbreak=\mbox{\textcolor{red}{$\hookrightarrow$}\space}
+    ]{references.bib}
+  }
+
+  \vspace{1em}
+
+  \begin{myverbatim}
+    ``\ldots due to breakthrough research \cite{artan2021}''
+  \end{myverbatim}
+
+  \begin{center}
+    ``\ldots due to breakthrough research \cite{artan2021}''
+  \end{center}
+\end{frame}
+
+
+\begin{frame}[fragile]{Listing bibliography references}
+
+  % references (build: xelatex, bibtex, xelatex)
+
+  \begin{myverbatim}
+    \bibliographystyle{ieeetr}
+    \bibliography{references.bib}
+  \end{myverbatim}
+
+  \vspace{1em}
+
+  \bibliographystyle{ieeetr}
+  \bibliography{references.bib}
+\end{frame}
+
+\section{Commands}
+
+\begin{frame}[fragile]{Commands}
+
+  \begin{verbatim}
+    \renewcommand{cmd}[args][default]{def}
+  \end{verbatim}
+
+\end{frame}
+
+\begin{frame}[fragile]{Environments}
+
+  \begin{verbatim}
+    \renewenvironment{nam}[args][default]{begdef}{enddef}
+  \end{verbatim}
+  
+\end{frame}
+
+\end{document}
