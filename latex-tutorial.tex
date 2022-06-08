@@ -109,10 +109,27 @@
 
 \end{frame}
 
+\begin{frame}[fragile]{Adding sections}
+
+\begin{lstlisting}[language=TeX]
+...
+\section{Wavelet Analysis}
+
+Researchers began studying wavelets in the 30s, because of their inherent cuteness in comparison to waves. 
+
+\subsection{Digression}
+
+Would that this were a whiteboard instead \ldots
+
+\end{document}
+\end{lstlisting}
+
+\end{frame}
+
 % include resulting pdf page
 {
   \setbeamercolor{background canvas}{bg=}
-  \includepdf[fitpaper]{figures/title.pdf}
+  \includepdf[fitpaper]{figures/sample.pdf}
 }
 
 \begin{frame}[fragile]{Common commands}
@@ -137,15 +154,10 @@
 
 \end{frame}
 
-\begin{frame}[fragile]{Layout commands/info}
+\begin{frame}[fragile]{Dimensions}
 
 \begin{center}
   \begin{tabular}{ l l }
-    \hline
-    \textbf{Command} & \textbf{Description} \\
-    \hline
-    \verb_\vspace{...}_ & add vertical space \\
-    \verb_\hspace{...}_ & add horizontal space \\
     \hline
     \textbf{Dimension} & \textbf{Description} \\
     \hline
@@ -155,6 +167,11 @@
     \verb_mm_ & millimeter \\
     \verb_em_ & relative to current point size (e.g., for 11\verb_pt_ font, 1\verb_em_ = 11\verb_pt_) \\
     \verb_en_ & half the width of \verb_em_ \\
+    \hline
+    \textbf{Command} & \textbf{Description} \\
+    \hline
+    \verb_\vspace{...}_ & add vertical space \\
+    \verb_\hspace{...}_ & add horizontal space \\
   \end{tabular}
 \end{center}
 
@@ -219,6 +236,7 @@
   \begin{enumerate}
     \item Three Eh
     \item Three Bee
+    \item[4] Four?!
   \end{enumerate}
 \end{enumerate}
 \end{lstlisting}
@@ -233,6 +251,7 @@
   \begin{enumerate}
     \item Three Eh
     \item Three Bee
+    \item[4] Four?! 
   \end{enumerate}
 \end{enumerate}
 
