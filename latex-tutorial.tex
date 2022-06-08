@@ -3,17 +3,20 @@
 % include additional packages
 \usepackage{pdfpages}
 \usepackage{listings}
+\usepackage{ragged2e}
+
+\usepackage{amsmath}
 
 % beamer template settings
 \setbeamertemplate{caption}[numbered]
 \setbeamertemplate{enumerate items}[default]
 \setbeamertemplate{bibliography item}[text]
-
-\usepackage{ragged2e}
+\setbeamerfont{bibliography item}{size=\scriptsize}
+\setbeamercovered{invisible}
 
 % listings settings
 \lstset{
-  basicstyle=\small,
+  basicstyle=\scriptsize,
   commentstyle=\color{gray},
   keywordstyle=,
   breaklines=true,
@@ -132,7 +135,14 @@ Would that this were a whiteboard instead \ldots
   \includepdf[fitpaper]{figures/sample.pdf}
 }
 
-\begin{frame}[fragile]{Common commands}
+\begin{frame}[fragile]{Commonly used syntax}
+
+\begin{center}
+  \begin{tabular}{ l l }
+    \verb_\usepackage{...}_ & import a \LaTeX~package in preamble \\
+    \verb_\include{...}_ & insert \LaTeX~code from another file in-place \\
+  \end{tabular}
+\end{center}
 
 \begin{center}
   \begin{tabular}{ l | l }
@@ -142,19 +152,14 @@ Would that this were a whiteboard instead \ldots
     \underline{underline} & \verb_\underline{...}_                    \\
     inline equations      & \verb_$...$_                              \\
     block equations       & \verb_$$...$$_ or \verb_\[...\]_          \\
+    ``quotes''            & \verb_`...'_ or \verb_``...''_            \\
     \ldots and many more! & \verb_\ldots_                             \\
   \end{tabular}
 \end{center}
 
-\vspace{1em}
-
-\begin{center}
-  \verb_\include{...}_ is used to insert \LaTeX code from another file in-place
-\end{center}
-
 \end{frame}
 
-\begin{frame}[fragile]{Dimensions}
+\begin{frame}[fragile]{Dimensions and layout}
 
 \begin{center}
   \begin{tabular}{ l l }
@@ -183,24 +188,42 @@ Would that this were a whiteboard instead \ldots
   \item Extra spaces between words are ignored
   \item An empty line starts a new \textbf{paragraph}
   \item Two backslashes (\textbackslash\textbackslash) \textbf{forces} a line break, but does not start a new paragraph (i.e., no indent)
-  \item Periods are treated as the \textbf{end of a sentence}, unless followed by a comma or backslash (e.g., i.e.\textbackslash)
+  \item Periods with trailing whitespace are treated as \textbf{end of sentence}, which can be escaped by a trailing backslash (e.g., i.e.\textbackslash)
   \item Tilde (\textasciitilde) inserts \textbf{non-breaking whitespace}
-  \item \textbf{Opening quotes} are denoted by 1--2 grave accents (` or ``)
-  \item \textbf{Closing quotes} are denoted by 1--2 apostrophes (' or '')
+  \item Adding an asterisk (*) after some environment names will hide their numbering (e.g., section*, figure*, equation*)
+  \item Curly braces (\{\ldots\}) may be used as blocks for formatting
 \end{itemize}
 
 \end{frame}
 
 \section{Lists}
 
-\begin{frame}[fragile]{Lists I: Itemize}
+\begin{frame}[fragile]{Lists}
+
+Packages:
+
+\begin{description}
+  \item[enumitem] custom enumerations/nesting
+\end{description}
+
+Commands:
+
+\begin{description}
+  \item[itemize] bullet points
+  \item[enumerate] numbered lists
+  \item[description] description lists (used here)
+\end{description}
+
+\end{frame}
+
+\begin{frame}[fragile]{Itemize}
 
 \begin{columns}
 \column{0.5\textwidth}
 \begin{lstlisting}[language=TeX]
 \begin{itemize}
   \item Lima
-  \item[-] Navy
+  \item Navy
   \item Kidney
   \begin{itemize}
     \item[yes] Bean
@@ -212,19 +235,18 @@ Would that this were a whiteboard instead \ldots
 \column{0.5\textwidth}
 \begin{itemize}
   \item Lima
-  \item[-] Navy
+  \item Navy
   \item Kidney
   \begin{itemize}
     \item[yes] Bean
     \item[no] Stone
   \end{itemize}
 \end{itemize}
-
 \end{columns}
   
 \end{frame}
 
-\begin{frame}[fragile]{Lists II: Enumerate}
+\begin{frame}[fragile]{Enumerate}
 
 \begin{columns}
 \column{0.5\textwidth}
@@ -236,7 +258,6 @@ Would that this were a whiteboard instead \ldots
   \begin{enumerate}
     \item Three Eh
     \item Three Bee
-    \item[4] Four?!
   \end{enumerate}
 \end{enumerate}
 \end{lstlisting}
@@ -251,10 +272,8 @@ Would that this were a whiteboard instead \ldots
   \begin{enumerate}
     \item Three Eh
     \item Three Bee
-    \item[4] Four?! 
   \end{enumerate}
 \end{enumerate}
-
 \end{columns}
 
 \end{frame}
@@ -263,35 +282,80 @@ Would that this were a whiteboard instead \ldots
 
 \begin{frame}[fragile]{Tables}
 
+Packages:
+
+\begin{description}
+  \item[array] tables with fixed-width cells
+  \item[tabularx] tables with fixed page width
+  \item[multirow] merge rows/columns
+\end{description}
+
+Commands:
+
+\begin{description}
+  \item[tabular] table environment
+\end{description}
+
+\end{frame}
+
+\begin{frame}[fragile]{Tables}
+
 \begin{columns}
-\column{0.6\textwidth}
+\column{0.5\textwidth}
 \begin{lstlisting}[language=TeX]
-\begin{tabular}{ | r | c c | }
+\begin{tabular}{ | r | l | l | }
   \hline
-       & col1 & col2 \\ 
+  Signal & Description & Range \\ 
   \hline
-  row1 & r1c1 &      \\
-  row2 &      & r2c2 \\
+  $\theta_l$ & lift & [0, 604] mm \\
+  \hline
+  $\theta_d$ & dump & [0, 396] mm \\
   \hline
 \end{tabular}
 \end{lstlisting}
 
-\column{0.4\textwidth}
-\begin{tabular}{ | r | c c | }
-  \hline
-        & col1 & col2 \\ 
-  \hline
-  row1 & r1c1 &      \\
-  row2 &      & r2c2 \\
-  \hline
-\end{tabular}
+\column{0.5\textwidth}
+{
+  \small
+  \begin{tabular}{ | r | l | l | }
+    \hline
+    Signal & Description & Range \\ 
+    \hline
+    $\theta_l$ & lift cylinder & [0, 604] mm \\
+    \hline
+    $\theta_d$ & dump cylinder & [0, 396] mm \\
+    \hline
+  \end{tabular}
+}
 \end{columns}
 
 \end{frame}
 
 \section{Math}
 
-\begin{frame}[fragile]{Common math syntax}
+\begin{frame}[fragile]{Math}
+
+Packages:
+
+\begin{description}
+  \item[amsmath] core math functionality
+  \item[amssymb] extended mathematical symbols set 
+  \item[cases] piecewise notation
+  \item[algorithm2e] algorithm environment
+\end{description}
+
+Commands:
+
+\begin{description}
+  \item[equation] equation environment
+  \item[split] multiline equation environment
+  \item[align] multiple aligned equations environment
+  \item[[pbv]matrix] matrices (similar syntax to tables) 
+\end{description}
+
+\end{frame}
+
+\begin{frame}[fragile]{Common equation syntax}
 
 \begin{center}
   \begin{tabular}{ l l l l }
@@ -331,24 +395,77 @@ Would that this were a whiteboard instead \ldots
 \begin{lstlisting}[language=TeX]
 \begin{equation}
   \begin{split}
-    a_{1, X} = & a_{1,x} \cos{\alpha} \\
-                & - a_{1,z} \sin{\alpha}
+    a_{1, X} & = a_{1,x} \cos{\alpha} - a_{1,z} \sin{\alpha} \\
+              & = 42
   \end{split}
 \end{equation}
 \end{lstlisting}
 
-\vspace{0em}
-
 \begin{equation}
   \begin{split}
-    a_{1, X} = & a_{1,x} \cos{\alpha} \\
-                & - a_{1,z} \sin{\alpha}
+    a_{1, X} & = a_{1,x} \cos{\alpha} - a_{1,z} \sin{\alpha} \\
+             & = 42
   \end{split}
 \end{equation}
 
 \end{frame}
 
-\section{Figures}
+\begin{frame}[fragile]{Matrices}
+
+\begin{columns}
+\column{0.5\textwidth}
+\begin{lstlisting}[language=TeX]
+\[
+  \begin{bmatrix}
+    0 & -1 & 0 & 0 \\
+    1 & 0  & 0 & 0 \\
+    0 & 0  & 1 & 0 \\
+    0 & 0  & 0 & 1
+  \end{bmatrix}
+\]
+\end{lstlisting}
+
+\column{0.5\textwidth}
+\[
+  \begin{bmatrix}
+    0 & -1 & 0 & 0 \\
+    1 & 0  & 0 & 0 \\
+    0 & 0  & 1 & 0 \\
+    0 & 0  & 0 & 1
+  \end{bmatrix}
+\]
+\end{columns}
+
+% \pause
+
+\only<2->\transdissolve
+\uncover<2->{\centering Exactly!}
+
+\end{frame}
+
+\section{Figures and references}
+
+\begin{frame}{Figures and references}
+
+Packages:
+
+\begin{description}
+  \item[graphicx] including graphics
+  \item[biblatex] bibliography management
+  \item[hyperref] hyperlinks 
+\end{description}
+
+Commands:
+
+\begin{description}
+  \item[includegraphics] include \ldots graphics
+  \item[addbibresource] add bibliography (.bib) file
+  \item[printbibliography] insert bibliography
+  \item[cite] in-text citation
+  \item[href] create hyperlink
+\end{description}
+
+\end{frame}
 
 \begin{frame}[fragile,allowframebreaks]{Creating a figure}
 
@@ -365,14 +482,12 @@ Would that this were a whiteboard instead \ldots
 
 \begin{figure}[t]
   \centering
-  \includegraphics[height=0.65\textheight]{figures/loader_diagram.png}
+  \includegraphics[height=0.7\textheight]{figures/loader_diagram.png}
   \caption{The Kubota R520s robotic 1-tonne-capacity wheel loader that was used for field experiments.}
   \label{fig:loader}
 \end{figure}
 
 \end{frame}    
-
-\section{References}
 
 \begin{frame}[fragile]{Label references}
 
@@ -380,7 +495,7 @@ Would that this were a whiteboard instead \ldots
 ``\ldots the Kubota Loader in Figure~\ref{fig:loader}''
 \end{lstlisting}
 
-``\ldots the Kubota Loader in Figure~\ref{fig:loader}''
+{\small``\ldots the Kubota Loader in Figure~\ref{fig:loader}''}
 
 \vspace{2em}
 
@@ -388,7 +503,11 @@ Would that this were a whiteboard instead \ldots
 ``see Equation~\ref{eq:CWTint}''
 \end{lstlisting}
 
-``see Equation~\ref{eq:CWTint}''
+{\small``see Equation~\ref{eq:CWTint}''}
+
+\vspace{2em}
+
+\textbf{Note}: ``fig:'' and ``eg:'' are not necessary, but they help when writing. ``ch:'' and ``sec:'' are often used for chapters and sections.
 
 \end{frame}
 
@@ -398,13 +517,15 @@ BibTeX entry (.bib files):
 
 \lstinputlisting[basicstyle=\tiny]{references.bib}
 
+Corresponding in-text citation:
+
 \begin{lstlisting}[language=TeX]
 ``\ldots due to breakthrough research \cite{artan2021}''
 \end{lstlisting}
 
 \vspace{0.5em}
 
-``\ldots due to breakthrough research \cite{artan2021}''
+{\small``\ldots due to breakthrough research \cite{artan2021}''}
 
 \end{frame}
 
@@ -414,7 +535,7 @@ BibTeX entry (.bib files):
 
 Often requires you to precompile your document, run bibtex, then compile it again with resolved references \ldots
 
-\vspace{0.5em}
+\vspace{1em}
 
 \begin{lstlisting}[language=TeX]
 \bibliographystyle{ieeetr}
@@ -430,22 +551,26 @@ Often requires you to precompile your document, run bibtex, then compile it agai
 
 \begin{frame}[fragile]{Hyperlinks}
 
+URL links:
+
 \begin{lstlisting}[language=TeX]
 \href{https://ieeexplore.ieee.org/document/9517696}{Paper}
 \end{lstlisting}
 
-\href{https://ieeexplore.ieee.org/document/9517696}{Paper}
+{\small\href{https://ieeexplore.ieee.org/document/9517696}{Paper}}
 
 \vspace{1.5em}
 
+Internal links:
+
 \begin{lstlisting}[language=TeX]
-\hypertarget{link:resolved}{This part}
-\hyperlink{link:resolved}{That part}
+\hypertarget{link:thisPart}{This part}
+\hyperlink{link:thisPart}{That part}
 \end{lstlisting}
 
-\hypertarget{link:resolved}{This part}
+{\small\hypertarget{link:thisPart}{This part}}
 
-\hyperlink{link:resolved}{That part}
+{\small\hyperlink{link:thisPart}{That part}}
 
 \end{frame}
 
@@ -467,11 +592,11 @@ Often requires you to precompile your document, run bibtex, then compile it agai
 \vspace{1.5em}
 
 \begin{lstlisting}[language=TeX]
-\newcommand{\proot}[2][]{{^{#1}}\!\!\!\sqrt{#2}}
+\newcommand{\proot}[2][]{\; ^{#1} \!\!\! \sqrt{#2}}
 \[ \proot[3]{x + y} + \proot{x} \]
 \end{lstlisting}
 
-\newcommand{\proot}[2][]{{^{#1}}\!\!\!\sqrt{#2}}
+\newcommand{\proot}[2][]{\; ^{#1} \!\!\! \sqrt{#2}}
 \[ \proot[3]{x + y} + \proot{x} \]
 
 \end{frame}
@@ -497,9 +622,9 @@ Often requires you to precompile your document, run bibtex, then compile it agai
   {\begin{center}\LARGE}
   {\end{center}}
 
-\begin{tinycenter}
+\begin{LARGEcenter}
   Thank you for your time!
-\end{tinycenter}
+\end{LARGEcenter}
 \end{lstlisting}
 
 \newenvironment{LARGEcenter}
