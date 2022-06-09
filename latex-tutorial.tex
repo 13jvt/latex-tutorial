@@ -4,6 +4,7 @@
 \usepackage{pdfpages}
 \usepackage{listings}
 \usepackage{ragged2e}
+\usepackage[linesnumbered,ruled]{algorithm2e}
 
 % beamer template settings
 \setbeamertemplate{caption}[numbered]
@@ -308,7 +309,7 @@ Commands:
 
 \end{frame}
 
-\begin{frame}[fragile]{Tables}
+\begin{frame}[fragile]{Tabular}
 
 \begin{columns}
 \column{0.5\textwidth}
@@ -360,7 +361,7 @@ Commands:
   \item[equation] equation environment
   \item[split] multiline equation environment
   \item[align] multiple aligned equations environment
-  \item[[pbv]matrix] matrices (similar syntax to tables) 
+  \item[(pbv)matrix] matrices (similar syntax to tables) 
 \end{description}
 
 \end{frame}
@@ -450,6 +451,56 @@ Commands:
 
 \only<2->\transdissolve
 \uncover<2->{\centering Exactly!}
+
+\end{frame}
+
+\begin{frame}[fragile,allowframebreaks]{Algorithms}
+
+\begin{lstlisting}[language=TeX]
+\begin{algorithm}[H]
+  \caption{Dynamic Time Warping}
+  \KwIn{Time series $X[1..n]$ and $Y[1..m]$}
+  \KwOut{Cost matrix $DTW[0..n][0..m]$}
+  $DTW[0][0] \gets 0$ \tcp*{warping path root}
+  ...
+
+  \For{$i \gets 1$ \textbf{to} $n$}
+  {
+    ...
+  }
+
+  \KwRet{$DTW[1..n][1..m]$}
+  \label{alg:DTW}
+\end{algorithm}
+\end{lstlisting}
+
+\framebreak
+
+\begin{algorithm}[H]
+  \DontPrintSemicolon
+  \SetAlgoLined
+  \scriptsize
+  \caption{Dynamic Time Warping}
+  \KwIn{Time series $X[1..n]$ and $Y[1..m]$}
+  \KwOut{Cost matrix $DTW[0..n][0..m]$}
+  $DTW[0][0] \gets 0$ \tcp*{warping path root}
+  $DTW[1..n][0] \gets infinity$
+  $DTW[0][1..m] \gets infinity$
+  \For{$i \gets 1$ \textbf{to} $n$}
+  {
+    \For{$j \gets 1$ \textbf{to} $m$}
+    {
+      $cost \gets \abs{X[i] - Y[j]}$ \tcp*{Euclidian distance}
+      $DTW[i][j] \gets cost + min$\parbox[t]{.3\linewidth}{(%
+        $DTW[i-1, j],$\\
+        $DTW[i, j-1],$\\
+        $DTW[i-1, j-1])$}
+    }
+  }
+  \KwRet{$DTW[1..n][1..m]$}
+  \label{alg:DTW}
+\end{algorithm}
+
 
 \end{frame}
 
