@@ -43,6 +43,9 @@
     \oldenddescription
   }
 
+% math operators
+\DeclareMathOperator{\CWT}{CWT}
+
 % title content
 \title{A \LaTeX~Tutorial}
 \author[\insertframenumber~of~\inserttotalframenumber]{Johann von Tiesenhausen}
@@ -414,6 +417,28 @@ Commands:
 
 \end{frame}
 
+\begin{frame}[fragile]{Custom operators and text}
+
+In the preamble:
+
+\begin{lstlisting}[language=TeX]
+\DeclareMathOperator{\CWT}{CWT}
+\end{lstlisting}
+
+\vspace{1em}
+
+used in \eqref{eq:CWTint} gives:
+
+\begin{lstlisting}[language=TeX]
+\[ \beta(s) = \int^\infty_{-\infty} \CWT(s, \tau) \; \textrm{d}\tau \]
+\end{lstlisting}
+
+\vspace{1em}
+
+\[ \beta(s) = \int^\infty_{-\infty} \CWT(s, \tau) \; \textrm{d}\tau \]
+
+\end{frame}
+
 \begin{frame}[fragile]{Multiline equations}
 
 \begin{lstlisting}[language=TeX]
@@ -514,7 +539,6 @@ Commands:
   \label{alg:DTW}
 \end{algorithm}
 
-
 \end{frame}
 
 \section{Figures and references}
@@ -578,10 +602,10 @@ Commands:
 \vspace{2em}
 
 \begin{lstlisting}[language=TeX]
-``see Equation~\ref{eq:CWTint}''
+``used in \eqref{eq:CWTint} gives''
 \end{lstlisting}
 
-{\small``see Equation~\ref{eq:CWTint}''}
+{\small``used in \eqref{eq:CWTint} gives''}
 
 \vspace{2em}
 
